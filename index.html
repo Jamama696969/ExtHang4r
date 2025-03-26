@@ -168,77 +168,12 @@
       <button onclick="warning();" id="hangButton">Hang Extension!</button>
       <button id="killButton" onclick="openExtensionPopup();">Kill Extension!</button>
     </div>
-    <div class="overlay" id="overlay">
-      <div class="spinner"></div> Hanging... (This will take about 1 minute)
-    </div>
     <div id="killExtensionText"></div>
     <footer>
       <p>Made by <a href="https://github.com/Blobby-Boi/">Blobby Boi</a>
       </p>
     </footer>
     <script>
-
-      async function populateSelectOptions() {
-        const selectElement = document.getElementById("iframeSelect");
-        const extensions = {
-          "Securly (3rd ID)": "chrome-extension://ckecmkbnoanpgplccmnoikfmpcdladkc/fonts/Metropolis.css",
-          "Securly (2nd ID)": "chrome-extension://joflmkccibkooplaeoinecjbmdebglab/fonts/Metropolis.css",
-          "Securly (1st ID)": "chrome-extension://iheobagjkfklnlikgihanlhcddjoihkg/fonts/Metropolis.css",
-          "GoGuardian": "chrome-extension://haldlgldplgnggkjaafhelgiaglafanh/youtube_injection.js",
-          "LANSchool": "chrome-extension://baleiojnjpgeojohhhfbichcodgljmnj/blocked.html",
-          "Linewize": "chrome-extension://ddfbkhpmcdbciejenfcolaaiebnjcbfc/background/assets/pages/default-blocked.html",
-          "Blocksi": "chrome-extension://ghlpmldmjjhmdgmneoaibbegkjjbonbk/pages/blockPage.html",
-          "FortiGuard": "chrome-extension://igbgpehnbmhgdgjbhkkpedommgmfbeao/youtube_injection.js",
-          "Cisco Umbrella": "chrome-extension://jcdhmojfecjfmbdpchihbeilohgnbdci/blocked.html",
-          "ContentKeeper": "chrome-extension://jdogphakondfdmcanpapfahkdomaicfa/img/ckauth19x.png",
-          "CK-Authenticator G3": "chrome-extension://odoanpnonilogofggaohhkdkdgbhdljp/img/ckauth19x.png",
-          "Securly Classroom (2nd ID)": "chrome-extension://hkobaiihndnbfhbkmjjfbdimfbdcppdh/notfound.html",
-          "Securly Classroom (1st ID)": "chrome-extension://jfbecfmiegcjddenjhlbhlikcbfmnafd/notfound.html",
-          "Hapara (2nd ID)": "chrome-extension://kbohafcopfpigkjdimdcdgenlhkmhbnc/blocked.html",
-          "Hapara (1st ID)": "chrome-extension://aceopacgaepdcelohobicpffbbejnfac/blocked.html",
-          "iboss": "chrome-extension://kmffehbidlalibfeklaefnckpidbodff/restricted.html",
-          "Lightspeed Digital Insight Agent": "chrome-extension://njdniclgegijdcdliklgieicanpmcngj/js/wasm_exec.js",
-          "Lightspeed Filter Agent": "chrome-extension://adkcpkpghahmbopkjchobieckeoaoeem/icon-128.png",
-          "Lightspeed Classroom": "chrome-extension://kkbmdgjggcdajckdlbngdjonpchpaiea/assets/icon-classroom-128.png",
-          "InterCLASS Filtering Service": "chrome-extension://jbddgjglgkkneonnineaohdhabjbgopi/pages/message-page.html",
-          "InterSafe GatewayConnection Agent": "chrome-extension://ecjoghccnjlodjlmkgmnbnkdcbnjgden/resources/options.js",
-          "LoiLo Web Filters": "chrome-extension://pabjlbjcgldndnpjnokjakbdofjgnfia/image/allow_icon/shield_green_128x128.png",
-          "Gopher Buddy": "chrome-extension://cgbbbjmgdpnifijconhamggjehlamcif/images/gopher-buddy_128x128_color.png",
-          "LanSchool Web Helper": "chrome-extension://honjcnefekfnompampcpmcdadibmjhlk/blocked.html",
-          "IMTLazarus": "chrome-extension://cgigopjakkeclhggchgnhmpmhghcbnaf/models/model.json",
-          "Impero Backdrop": "chrome-extension://jjpmjccpemllnmgiaojaocgnakpmfgjg/licenses.html",
-          "Mobile Guardian": "chrome-extension://fgmafhdohjkdhfaacgbgclmfgkgokgmb/block.html",
-          "NetSupport School Student": "chrome-extension://gcjpefhffmcgplgklffgbebganmhffje/_locales/lt/messages.json",
-          "classroom.cloud Student": "chrome-extension://mpkdoimpgkhjcicmhmlmgboelebflpla/_locales/lt/messages.json",
-          "Lockdown Browser": "chrome-extension://fogjeanjfbiombghnmkmmophfeccjdki/manifest.json",
-          "Linewize Filter": "chrome-extension://ifinpabiejbjobcphhaomiifjibpkjlf/background/assets/pages/default-blocked.html",
-          "Borderless Classroom Student": "chrome-extension://kdpgkligilplaanoablcpjahjjeghcl/pages/blockPage.html",
-          "LockDown Browser AP Classroom Edition": "chrome-extension://djpknfecbncogekjnjppojlaipeobkmo/assets/images/icon_128.png",
-          "Lugus School": "chrome-extension://eoobggamkobbcpiojefejfglbfcacgca/assets/images/icon_128.png"
-        };
-        let hasSupportedExtensions = false;
-        for (const [name, url] of Object.entries(extensions)) {
-          if (await checkExtensionURL(url)) {
-            const option = document.createElement("option");
-            option.value = url;
-            option.textContent = name;
-            selectElement.appendChild(option);
-            hasSupportedExtensions = true;
-          }
-        }
-        if (!hasSupportedExtensions) {
-          const option = document.createElement("option");
-          option.value = "";
-          option.textContent = "No supported extensions installed";
-          selectElement.appendChild(option);
-          document.getElementById("hangButton").style.display = "none";
-          document.getElementById("iframeCountSlider").style.display = "none";
-          try{document.getElementById("labelForIframeSlider").style.display = "none";}catch(err){}
-          document.getElementById("iframeCountValue").style.display = "none";
-        }
-      }
-      populateSelectOptions();
-
       function replaceIframes(container, iframeSrc, iframeCount) {
         for (let i = 0; i < iframeCount; i++) {
           const iframe = document.createElement('iframe');
@@ -265,14 +200,6 @@
         }
       }
 
-      function openExtensionPopup() {
-        const selectedSrc = document.getElementById("killButton").getAttribute("data-url");
-        const extensionId = selectedSrc.substring(selectedSrc.indexOf("//") + 2, selectedSrc.indexOf("/", selectedSrc.indexOf("//") + 2));
-        const killExtensionText = document.getElementById("killExtensionText");
-        document.getElementById("killButton").style.display = "none";
-        killExtensionText.innerHTML = "Make sure to keep this tab open. Then open  <strong> chrome: //extensions/?id=" + extensionId + "</strong> and flip the switch called \"Allow access to file URLs\" twice. The extension was successfully killed! Now you can close that tab as well as this one. If you want to restore the extension, flip the allow access to file URLs switch again.";
-        window.location.href = selectedSrc;
-      }
     </script>
   </body>
 </html>
